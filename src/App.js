@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Form from "react-bootstrap/Form";
 
 function App() {
+  const create = () => {};
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div id="create">
+        <button onClick="create">Create Note</button>
+      </div>
+      <div id="createForm">
+        <Form>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Enter your title:</Form.Label>
+            <Form.Control type="text" />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Enter your note:</Form.Label>
+            <Form.Control as="textarea" />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Select a colour:</Form.Label>
+            <Form.Select>
+              <option>Blue</option>
+              <option>Peach</option>
+              <option>Green</option>
+              <option>Pink</option>
+            </Form.Select>
+          </Form.Group>
+        </Form>
+      </div>
     </div>
   );
 }
