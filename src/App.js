@@ -5,12 +5,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
 
-  const [isShown, setIsShown] = useState(false);
+  const [showAddNote, setshowAddNote] = useState(false);
   const [createBtn, setCreateBtn] = useState(true);
   
   const create = event => {
     setCreateBtn(false);
-    setIsShown(true);
+    setshowAddNote(true);
   };
 
 
@@ -19,7 +19,7 @@ function App() {
       
       {createBtn && (<button onClick={create}>Create Note</button>)}
       
-      {isShown && <AddNote/>}
+      {showAddNote && <AddNote/>}
 
       
     </div>

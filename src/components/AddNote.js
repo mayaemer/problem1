@@ -9,7 +9,7 @@ function AddNote() {
   const createNote = () => {};
 
   const getData = (e) => {
-    this.setColour(e.target.value)
+    console.log('test')
   };
 
   console.log(colour)
@@ -26,7 +26,7 @@ function AddNote() {
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Select a colour:</Form.Label>
-          <Form.Select onChange={this.getData}>
+          <Form.Select onChange={getData}>
             <option>Blue</option>
             <option>Peach</option>
             <option>Green</option>
