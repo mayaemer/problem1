@@ -3,13 +3,6 @@ import { useState } from "react";
 import Note from "./Note";
 
 function AddNote() {
-  // function from stack overflow
-  let increment = (function (i) {
-    return function () {
-      i += 1;
-      return i;
-    };
-  })(0);
 
   const colours = [
     { value: "#b3f0ff", text: "Blue" },
@@ -18,16 +11,24 @@ function AddNote() {
     { value: "#b3e6b3", text: "Green" },
   ];
 
+  const [noteId, setNoteId] = useState(0);
   const [selectedColour, setSelectedColour] = useState(colours[0].value);
   const [noteBody, setNoteBody] = useState("");
   const [noteTitle, setNoteTitle] = useState("");
-
   const [noteArray, setNoteArray] = useState([]);
+  const [formVisible, setFormVisible] = useState(true)
+
+  const deleteNote = (e) => {
+    const deleteElement = noteArray.filter((note) => note.id != e.target.value);
+    setNoteArray(deleteElement)
+  }
 
   const createNote = (e) => {
+    console.log(noteId)
     e.preventDefault();
-    setNoteArray([...noteArray, { title: noteTitle, body: noteBody, colour:selectedColour }]);
-
+    setNoteArray([...noteArray, { id: noteId, title: noteTitle, body: noteBody, colour:selectedColour }]);
+    setFormVisible(false)
+    setNoteId(noteId + 1);
   };
 
   const getTitle = (e) => {
@@ -44,7 +45,7 @@ function AddNote() {
 
   return (
     <div className="AddNote">
-      <div className="form">
+      { formVisible && <div className="form">
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Enter your title:</Form.Label>
@@ -66,11 +67,15 @@ function AddNote() {
           </Form.Group>
           <button onClick={createNote}>Add</button>
         </Form>
-      </div>
+      </div>}
       <div className='noteSection'>
       {noteArray.map((value, key) => {
         return (
-          <Note key={key} title={value.title} body={value.body} colour={value.colour}/>
+          <div>
+            <Note key={key} title={value.title} body={value.body} colour={value.colour}/>
+            <button onClick={deleteNote} value={value.id}>Delete</button>
+            <button>Edit</button>
+          </div>
         );
        })}
       </div>
