@@ -1,6 +1,4 @@
 export default function Note({title, body, colour}){
-    
-
 
     return (
         <div className='note' style={{backgroundColor : colour}}>
