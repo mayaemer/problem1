@@ -3,9 +3,11 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
 import Note from "./components/Note";
+import { useRef } from "react";
 
 function App() {
   const [createBtn, setCreateBtn] = useState(true);
+
 
   const colours = [
     { value: "#b3f0ff", text: "Blue" },
@@ -20,8 +22,16 @@ function App() {
   const [noteTitle, setNoteTitle] = useState("");
   const [noteArray, setNoteArray] = useState([]);
   const [formVisible, setFormVisible] = useState(false);
+  const [editVisible, setEditVisible] = useState(false);
+
+  const [editNoteId, setEditNoteId] = useState();
+  const [editNoteTitle, setEditNoteTitle] = useState('');
+  const [editBody, setEditBody] = useState('');
+  const [editColour, setEditColour] = useState('');
+
 
   const [editNoteArr, setEditNoteArr] = useState([]);
+
 
   const create = () => {
     setCreateBtn(false);
@@ -33,9 +43,15 @@ function App() {
     setNoteArray(deleteElement);
   };
 
-  console.log(editNoteArr);
   const editNote = (e) => {
+
+    setEditVisible(true)
+
     const editElement = noteArray.filter((note) => note.id == e.target.value);
+    setEditNoteId(editElement[0].id)
+    setEditNoteTitle(editElement[0].title)
+    setEditBody(editElement[0].body)
+    setEditColour(editElement[0].colour)
     setEditNoteArr([
       ...editNoteArr,
       {
@@ -44,26 +60,27 @@ function App() {
         body: editElement[0].body,
         colour: editElement[0].colour,
       },
+      
     ]);
 
-    setNoteTitle(editElement[0].title)
-    setNoteBody(editElement[0].body)
 
   };
 
   const save = (e) => {
     e.preventDefault();
+    setEditVisible(false)
+
 
     const updatedNote = noteArray.map(note => {
       if (note.id == e.target.value){
-        return {...note, title: noteTitle, body: noteBody, colour: selectedColour}
+        return {...note, title: editNoteTitle, body: editBody, colour: editColour}
       }
       return note;
     })
 
-    const removeEdit = editNoteArr.filter((edit) => edit.id != e.target.value);
+    // const removeEdit = editNoteArr.filter((edit) => edit.id != e.target.value);
     
-    setEditNoteArr(removeEdit);
+    // setEditNoteArr(removeEdit);
     setNoteArray(updatedNote);
   }
 
@@ -90,9 +107,18 @@ function App() {
     setSelectedColour(e.target.value);
   };
 
-  const test = (e) => {
-    console.log("test");
+  const editTitle = (e) => {
+    setEditNoteTitle(e.target.value);
   };
+
+  const handleEditBody = (e) => {
+    setEditBody(e.target.value);
+  };
+
+  const handleEditColour = (e) => {
+    setEditColour(e.target.value);
+  };
+
 
   return (
     <div className="App">
@@ -146,30 +172,31 @@ function App() {
       </div>
 
       <div className="editNote">
-        {editNoteArr.map((value, key) => {
-          return (
+        {/* {editNoteArr.map((value) => {
+          return ( */}
+          { editVisible &&
             <div>
-              <Form key={key}>
+              <Form>
                 <Form.Group className="mb-3">
-                  <Form.Control type="text" value={noteTitle} onChange={getTitle} />
+                  <Form.Control type="text" value={editNoteTitle} onChange={editTitle} />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Control as="textarea" value={noteBody} rows={3} onChange={getNote} />
+                  <Form.Control as="textarea" value={editBody} rows={3} onChange={handleEditBody} />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Select value={selectedColour} onChange={getColour}>
+                  <Form.Select value={editColour} onChange={handleEditColour}>
                     {colours.map((colour) => (
-                      <option key={colour.value} value={value.colour}>
+                      <option key={colour.value} value={colour.value}>
                         {colour.text}
                       </option>
                     ))}
                   </Form.Select>
                 </Form.Group>
-                <button onClick={save} value={value.id}>Save</button>
+                <button onClick={save} value={editNoteId}>Save</button>
               </Form>
-            </div>
-          );
-        })}
+            </div>}
+          {/* );
+        })} */}
       </div>
     </div>
   );
