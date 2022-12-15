@@ -1,5 +1,13 @@
-.App {
+.noteSection {
+  display: grid; 
+  grid-template-columns: 25% 25% 25% 25%; 
+  grid-template-areas: "col-1 col-2 col-3 col-4";
+  grid-gap: 2px;
   text-align: center;
+}
+
+#btn, .form, .noteSection {
+  margin: 0.5em;
 }
 
 .App-logo {
@@ -35,4 +43,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.form {
+  display: grid;
+  width: 50%;
 }
