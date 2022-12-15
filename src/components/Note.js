@@ -1,9 +1,9 @@
-export default function Note({title, body, colour}){
+export default function Note(props){
 
     return (
-        <div className='note' style={{backgroundColor : colour}}>
-            <h2>{title}</h2>
-            <p>{body}</p>
+        <div className='note' style={{backgroundColor : props.colour}}>
+            <h2>{props.title}</h2>
+            <p>{props.body}</p>
         </div>
     )
 }
